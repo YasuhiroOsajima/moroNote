@@ -1,6 +1,6 @@
 # moroNote
 markdown editor web application.
 
-![notelist](https://github.com/YasuhiroOsajima/moroNote/images/notelist.jpg)
-![noteeditor](https://github.com/YasuhiroOsajima/moroNote/images/noteeditor.jpg)
+![notelist](images/notelist.jpg "note list")
+![noteeditor](images/noteeditor.jpg "note editor")
 
