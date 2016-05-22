@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>moroNote</title>
+  <meta charset="UTF-8" />
+
+  <link rel="stylesheet" href="../css/external/jquery.treeview.css" />
+  <link rel="stylesheet" href="../css/external/sweetalert.css" />
+  <link rel="stylesheet" href="../css/external/chromeContext.min.css" />
+  <!-- <link type="text/css" rel="stylesheet" href="https://code.jquery.com/ui/1.11.3/themes/cupertino/jquery-ui.min.css" /> -->
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.3/themes/cupertino/jquery-ui.min.css" />
+
+  <link rel="stylesheet" href="../css/external/github.css">
+
+  <link rel="stylesheet" href="../css/app/menu.css" />
+  <link rel="shortcut icon" href="">
+</head>
+
+<body>
+  <div id="wrapper">
+  
+    <div id="sidemenu">
+      <section id="side_header">
+        <div id="account"></div>
+        <input id="logout" type="button" value="ログアウト" onclick="history.back()">
+      </section>
+  
+      <section id="side_tree">
+      </section>
+    </div>
+  
+    <div id="main">
+      <section id="main_header">
+        <input type="text" name="example" id="searcher">
+        <input type="submit" value="検索" id="search">
+      </section>
+  
+      <section id="main_sort">
+        <select id="sort_menue" name="sort_menue" size="1">
+          <option value="tile" selected>タイトル</option>
+          <option value="updated_at" selected>更新日時</option>
+        </select>
+  
+        <select id="sorter" name="sort_menue" size="1">
+          <option value="oldtop" selected>昇順</option>
+          <option value="newtop" selected>降順</option>
+        </select>
+
+        <input id="createnote" type="button" value="ノート作成" >
+      </section>
+  
+      <section id="main_notes">
+      </section>
+    </div>
+  
+    <div id="preview"></div>
+  </div>
+
+  <!-- js -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.2.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+  <script src="../js/external/jquery.base64.js"></script>
+
+  <!-- right click menue -->
+  <script src="../js/external/jquery.chromeContext.min.js"></script>
+
+  <!-- popup -->
+  <script src="../js/external/sweetalert.min.js"></script>
+
+  <!-- folder tree and note list -->
+  <script src="../js/external/jquery.treeview.js"></script>
+  <script src="../js/external/underscore.js"></script>
+  <script src="../js/external/backbone.js"></script>
+  <script src="../js/external/moment.min.js"></script>
+
+  <!-- note preview -->
+  <script src="../js/external/marked/marked.min.js"></script>
+  <script src="../js/external/highlight.pack.js"></script>
+  
+  <!-- template -->
+  <script type="text/template" id="note-view">
+    <a class="notetitle"><%- title %></a>
+    <a class="updateat"><%- updated_at %></a><br><br>
+    <!-- <a class="noteheader"> TEST </a> -->
+  </script>
+  <script type="text/template" id="folder-view">
+    <span class="folder"><%- name %></span>
+  </script>
+  
+  <!-- for backbonejs -->
+  <script src="../js/app/model/Note.js"></script>
+  <script src="../js/app/view/NotesView.js"></script>
+  <script src="../js/app/collection/NoteList.js"></script>
+  
+  <script src="../js/app/model/Folder.js"></script>
+  <script src="../js/app/view/FolderTreeView.js"></script>
+  <script src="../js/app/collection/FolderList.js"></script>
+  
+  <script src="../js/app/menu.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>moroNote</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../css/external/sweetalert.css" />
+  <link rel="stylesheet" href="../css/app/manage.css" />
+</head>
+<body>
+  <div id="wrapper">
+    <div id="title">moroNote</div>
+
+    <section id="input_section">
+      <div id="useradd">
+        <p id="title_useradd">ユーザ登録：</p>
+
+        <div id="username">ユーザ名</div>
+        <input id="namearea" type="text" name="username" placeholder="Username"/>
+
+        <div id="password">パスワード</div>
+        <input id="passwordarea" type="password" name="password" placeholder="Password"/>
+
+        <input id="registorb" type="button"  value="登録">
+      </div>
+
+      <div id="userdel">
+        <p id="title_userdel">ユーザ削除：</p>
+
+        <div id="username">ユーザ名</div>
+        <input id="namearea" type="text" name="username" placeholder="Username"/>
+
+        <input id="deleteb" type="button"  value="削除">
+      </div>
+      <input id="back" type="button"  value="戻る">
+
+    </section>
+
+  </div>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.2.min.js"></script>
+  <script src="../js/external/sweetalert.min.js"></script>
+  <script src="../js/app/auth.js"></script>
+</body>
+</html>
+
