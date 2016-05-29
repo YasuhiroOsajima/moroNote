@@ -4,6 +4,7 @@ var logger = require('morgan');
 var path = require('path');
 var fs = require('fs');
 var https = require('https');
+var ConfigFile = require('config');
 
   // for REST API
 var bodyParser = require('body-parser');
@@ -38,9 +39,9 @@ app.use(function(req, res, next) {
 
 //app.use(cookieParser());
 app.use(session({
-  secret: 'd6a2a8e8158a',
+  secret: ConfigFile.config.session_secret,
   store: new MongoStore({
-           url: 'mongodb://xxxxx:xxxxxx@localhost/morouser',
+           url: "mongodb://"+ConfigFile.config.mongo_user+":"+ConfigFile.config.mongo_password+"@localhost/morouser",
            clear_interval: 60 * 60
   }),
 }));
@@ -90,10 +91,10 @@ app.delete('/folder', webapi.folder_delete)
 app.delete('/note', webapi.note_delete)
 
 
-var privateKey  = fs.readFileSync('/xxxx.pem');
-var certificate = fs.readFileSync('/xxxx.pem');
+var privateKey  = fs.readFileSync(ConfigFile.config.privatekey_path);
+var certificate = fs.readFileSync(ConfigFile.config.cerfile_path);
 var credentials = {key: privateKey, cert: certificate};
 var httpsServer = https.createServer(credentials, app);
-httpsServer.listen(9999);
+httpsServer.listen(ConfigFile.config.listen_port);
 
 

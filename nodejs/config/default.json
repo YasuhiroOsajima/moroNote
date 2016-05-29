@@ -1,0 +1,10 @@
+{
+    "config":{
+        "mongo_user":"xxxx",
+        "mongo_password":"xxxx",
+        "privatekey_path": "xxxx/privkey.pem",
+        "cerfile_path": "xxxx/cert.pem",
+        "session_secret": "xxxx",
+        "listen_port": 0000
+    }
+}

@@ -1,7 +1,6 @@
-var dbserver = "xxxxxx";
-var headerurl = "//"+dbserver+":9999";
+var headerurl = document.origin.slice(6);
 
-$('#login').click(function() {
+function checkAndLogin() {
   var username = $('#namearea').val();
   var password = $('#passwordarea').val();
 
@@ -25,6 +24,26 @@ $('#login').click(function() {
       });
     }
   });
+}
+
+$(function($) {
+  $('#namearea').keypress(function(e) {
+    if (e.which == 13) {
+      checkAndLogin();
+    }
+  });
+});
+
+$(function($) {
+  $('#passwordarea').keypress(function(e) {
+    if (e.which == 13) {
+      checkAndLogin();
+    }
+  });
+});
+
+$('#login').click(function() {
+  checkAndLogin();
 });
 
 $('#manage').click(function() {

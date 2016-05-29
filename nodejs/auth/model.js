@@ -1,5 +1,8 @@
 var mongoose = require('mongoose');
-var url = 'mongodb://xxxx:xxxx@localhost/morouser';
+var ConfigFile = require('config');
+
+var url = "mongodb://"+ConfigFile.config.mongo_user+":"+ConfigFile.config.mongo_password+"@localhost/morouser";
+
 
 var db = mongoose.createConnection(url, function(err, res){
   if(err){

@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://xxxx:xxxx@localhost/moronote');
+var ConfigFile = require('config');
+
+mongoose.connect("mongodb://"+ConfigFile.config.mongo_user+":"+ConfigFile.config.mongo_password+"@localhost/moronote");
 
 
 //folder

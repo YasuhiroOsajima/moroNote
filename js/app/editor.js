@@ -1,5 +1,4 @@
-var dbserver = "xxxxxx";
-var headerurl = "//"+dbserver+":9999";
+var headerurl = document.origin.slice(6);
 
 $(function() {
   $('#edit').keyup(function() {

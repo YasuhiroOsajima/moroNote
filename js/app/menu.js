@@ -1,5 +1,4 @@
-var dbserver = "xxxxxx";
-var headerurl = "//"+dbserver+":9999";
+var headerurl = document.origin.slice(6);
 
 $('input#logout').click(function() {
   $.ajax({
@@ -608,6 +607,6 @@ $('input[type="button"], input[type="submit"], select').each(function(index, obj
 
 
 (function(){
-  console.log(document);
+  console.log(document.origin);
 })();
 
