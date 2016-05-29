@@ -11,34 +11,42 @@
     <div id="title">moroNote</div>
 
     <section id="input_section">
-      <div id="useradd">
-        <p id="title_useradd">ユーザ登録：</p>
+      <div id="usersection">
+        <div id="userlist">
+          <p id="title_userlist">ユーザ一覧：</p>
+          <ul id="userlistarea"></ul>
+        </div>
 
-        <div id="username">ユーザ名</div>
-        <input id="namearea" type="text" name="username" placeholder="Username"/>
+        <div id="useradd">
+          <p id="title_useradd">ユーザ登録：</p>
 
-        <div id="password">パスワード</div>
-        <input id="passwordarea" type="password" name="password" placeholder="Password"/>
+          <div id="username">ユーザ名</div>
+          <input class="namearea" id="addnamearea" type="text" name="addusername" placeholder="Username"/>
 
-        <input id="registorb" type="button"  value="登録">
+          <div id="password">パスワード</div>
+          <input id="passwordarea" type="password" name="password" placeholder="Password"/>
+
+          <input id="registorb" type="button"  value="登録">
+        </div>
+
+        <div id="userdel">
+          <p id="title_userdel">ユーザ削除：</p>
+
+          <div id="username">ユーザ名</div>
+          <input class="namearea" id="deletenamearea" type="text" name="deleteusername" placeholder="Username"/>
+
+          <input id="deleteb" type="button"  value="削除">
+        </div>
       </div>
 
-      <div id="userdel">
-        <p id="title_userdel">ユーザ削除：</p>
-
-        <div id="username">ユーザ名</div>
-        <input id="namearea" type="text" name="username" placeholder="Username"/>
-
-        <input id="deleteb" type="button"  value="削除">
-      </div>
       <input id="back" type="button"  value="戻る">
-
     </section>
+
 
   </div>
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.2.min.js"></script>
   <script src="../js/external/sweetalert.min.js"></script>
-  <script src="../js/app/auth.js"></script>
+  <script src="../js/app/manage.js"></script>
 </body>
 </html>
 

@@ -13,11 +13,11 @@ body {
 
 #wrapper {
   padding-top: 4%;
-  padding-left: 40%;
+  padding-left: 30%;
 }
 
 #title {
-  padding-left: 100px;
+  padding-left: 220px;
   padding-bottom: 10px;
   font-size: 20px;
   font-family: Gungsuh;
@@ -25,8 +25,29 @@ body {
 
 #input_section {
   height: 440px;
-  width: 320px;
+  width: 520px;
+  margin: 0 0;
+  padding: 0 0;
   background: #a0cfd3;
+  border-left: #fff 1px solid;
+  border-top: #fff 1px solid;
+  border-right: #999 1px solid;
+  border-bottom: #999 1px solid;
+}
+
+#usersection {
+  height: 400px;
+  width: 100%;
+  margin: 0 0;
+  padding: 0 0;
+}
+
+#userlist {
+  float: right;
+  margin-top: 10px;
+  margin-right: 10px;
+  height: 95%;
+  width: 35%;
   border-left: #fff 1px solid;
   border-top: #fff 1px solid;
   border-right: #999 1px solid;
@@ -36,6 +57,8 @@ body {
 #useradd {
   float: left;
   margin: 10px 10px;
+  width: 58%;
+  //width: 300px;
   border-left: #fff 1px solid;
   border-top: #fff 1px solid;
   border-right: #999 1px solid;
@@ -52,7 +75,7 @@ body {
   font-family: Impact;
 }
 
-#namearea {
+.namearea {
   height: 20px;
   width: 250px;
   margin-left: 20px;
@@ -89,11 +112,14 @@ body {
 #userdel {
   float: left;
   margin: 5px 10px;
+  width: 58%;
+  //width: 300px;
   border-left: #fff 1px solid;
   border-top: #fff 1px solid;
   border-right: #999 1px solid;
   border-bottom: #999 1px solid;
 }
+
 #title_userdel {
   padding-left: 10px;
 }
@@ -109,13 +135,6 @@ body {
   border-radius: 3px;
 }
 
-#userlist {
-  float: right;
-  height: 200px;
-  width: 100px;
-  border: #000 1px solid;
-}
-
 #back {
   clear: both;
   margin-top: 10px;
@@ -126,4 +145,13 @@ body {
   box-shadow: 1px 1px 0px 0px #999;
   border-radius: 3px;
 }
+
+#userlistarea {
+  list-style-type: circle;
+}
+
+.noteusers {
+  margin-bottom: 3px;
+}
+
 

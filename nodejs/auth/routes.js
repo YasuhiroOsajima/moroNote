@@ -14,7 +14,7 @@ exports.login = function(req, res){
     if(data==""){
       console.log(data);
       var loginfilepath = path.resolve(__dirname + '/../../html/login.html')
-      res.status(401)
+      res.status(401);
       res.sendFile(loginfilepath);
     }else{
       //user found in DB.
@@ -25,21 +25,50 @@ exports.login = function(req, res){
   });
 };
 
-exports.add = function(req, res){
+exports.add = function (req, res){
   console.log("TEST");
-  console.log(req.query.password);
-  if(req.query.password.length < 8) {
+  var reqbody = req.body;
+  console.log(reqbody);
+  if(reqbody.password.length < 8) {
     res.send(400);
   }
 
-  var newUser = new User(req.body);
+  var newUser = new User(reqbody);
   newUser.save(function(err){
+    console.log("TEST2");
+    console.log(err);
     if(err){
       console.log(err);
       res.redirect('/login');
     }else{
-      res.redirect('/login');
+      res.send(200);
     }
+  });
+};
+
+exports.userdel = function (req, res){
+  console.log("DELETE");
+  var username = req.body.username;
+  console.log(username);
+
+  User.remove({ "username": username }, function(err) {
+    console.log("TEST3");
+    console.log(err);
+    if(err){
+      console.log(err);
+      res.redirect('/login');
+    }else{
+      res.send(200);
+    }
+  });
+};
+
+exports.list = function(req, res){
+  var query = {};
+  User.find(query, { "username" : 1 }, function(err, data){
+    if(err){  console.log(err); }
+    res.status(200)
+    res.json(data);
   });
 };
 
