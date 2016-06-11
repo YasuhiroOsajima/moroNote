@@ -4,10 +4,6 @@ var mongoose = require('mongoose');
 var mongo = require('./mongo');
 
 //get html file
-exports.menuget = function(req, res){
-  res.sendFile(path.resolve(__dirname + '/../html/menu.html'));
-};
-
 exports.editorget= function(req, res){
   res.sendFile(path.resolve(__dirname + '/../html/editor.html'));
 };
