@@ -1,3 +1,4 @@
+//var headerurl = document.baseURI.slice(6).split('/login')[0];
 var headerurl = document.origin.slice(6);
 
 $('#registorb').click(function() {

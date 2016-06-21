@@ -1,3 +1,4 @@
+//var headerurl = document.baseURI.slice(6).split('/login')[0];
 var headerurl = document.origin.slice(6);
 
 $('input#logout').click(function() {
@@ -34,7 +35,7 @@ var getFoldersFromDB = function() {
   });
 };
 
-var printFolders = function() {
+function printFolders() {
   (function(){
     var folderList = new com.apress.collection.FolderList([
       { folderid: 0, name: 'ALL', sortname: '-1', parentfolderid: ''},
@@ -235,7 +236,7 @@ var changeFolderName = function(folderobj) {
   });
 }
 
-var resetFolderView = function() {
+function resetFolderView() {
   getFoldersFromDB();
   printFolders();
   printFolderTree();

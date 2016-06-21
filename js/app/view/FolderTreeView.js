@@ -24,7 +24,7 @@ com.apress.view.FolderView = Backbone.View.extend({
     //  this.$el.remove();
     //},
 
-    template: _.template( $('#folder-view').html() ),
+    template: _.template( $("#folder-view").html() ),
     render: function() {
       this.el.id = this.model.toJSON().folderid;
       var template = this.template( this.model.toJSON() );
@@ -33,10 +33,11 @@ com.apress.view.FolderView = Backbone.View.extend({
     }
 });
 
+
 com.apress.view.FolderTreeView = Backbone.View.extend({
-  tagName: 'ul',
-  id: 'foldertree',
-  className: 'treeview-famfamfam',
+  tagName: "ul",
+  id: "foldertree",
+  className: "treeview-famfamfam",
   topfolders: [],
   untopfolders: [],
 
@@ -65,12 +66,12 @@ com.apress.view.FolderTreeView = Backbone.View.extend({
 
           if (parentfolder.is('#'+parentfolderid)) {
             
-            var hasul = parentfolder.find('ul');
-            if (!hasul.is('ul')) {
+            var hasul = parentfolder.find("ul");
+            if (!hasul.is("ul")) {
               parentfolder.append('<ul id="follow"></ul>');
             }
             var folderView = new com.apress.view.FolderView({ model: folder });
-            parentfolder.find('ul').append(folderView.render().el);
+            parentfolder.find("ul").append(folderView.render().el);
 
             for(i=0; i<this.untopfolders.length; i++){
               if(this.untopfolders[i] == folder){

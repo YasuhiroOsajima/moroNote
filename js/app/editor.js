@@ -1,4 +1,6 @@
+//var headerurl = document.baseURI.slice(6).split('/login')[0];
 var headerurl = document.origin.slice(6);
+
 var noteid = window.location.hash.slice(1);
 
 
@@ -51,7 +53,7 @@ function getNotename() {
 };
 
 
-$("input#save").click(function() {
+function uploadNotedata() {
   var notedata = $("#edit").val();
   var senddata = {"noteid": noteid, "notedata": notedata};
   $.ajax({
@@ -67,6 +69,11 @@ $("input#save").click(function() {
     console.log(jqXHR);
   });
   $(window).off("beforeunload");
+};
+
+
+$("input#save").click(function() {
+  uploadNotedata();
 });
 
 
@@ -77,4 +84,17 @@ $("input#close").click(function() {
 
 getOriginNotedata();
 getNotename();
+
+
+$(window).bind('keydown', function(event) {
+  if (event.ctrlKey || event.metaKey) {
+    switch (String.fromCharCode(event.which).toLowerCase()) {
+    case 's':
+      event.preventDefault();
+      uploadNotedata();
+      break;
+    }
+  }
+});
+
 
