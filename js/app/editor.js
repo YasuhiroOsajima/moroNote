@@ -1,4 +1,6 @@
 var headerurl = document.origin.slice(6);
+var noteid = window.location.hash.slice(1);
+
 
 $(function() {
   $('#edit').keyup(function() {
@@ -7,7 +9,17 @@ $(function() {
   });
 });
 
-var getOriginNotedata = function() {
+
+$(window).ready(function(){
+  $("textarea").on("keyup change", function(){
+    $(window).on("beforeunload", function() {
+      return "ノートが更新されています。保存せずにノートを閉じますか？";
+    });
+  });
+});
+
+
+function getOriginNotedata() {
   $.ajax({
     type: "GET",
     url: headerurl+"/notedata",
@@ -15,8 +27,8 @@ var getOriginNotedata = function() {
     async: false,
     cache: false,
     success : function(json, status) {
-      notedata_org = json["0"]["data"];
-      $('#edit').val(notedata_org);
+      var notedata_org = json["0"]["data"];
+      $("#edit").val(notedata_org);
       var html = marked(notedata_org);
       $('#preview').html(html);
     }
@@ -24,71 +36,45 @@ var getOriginNotedata = function() {
 };
 
 
-var noteid = window.location.hash.slice(1);
+function getNotename() {
+  $.ajax({
+    type: "GET",
+    url: headerurl+"/noteheader",
+    data: {"noteid": noteid},
+    async: false,
+    cache: false,
+    success : function(json, status) {
+      var notename = json["0"]["title"];
+      $('#notename').html(notename);
+    }
+  });
+};
 
-$.ajax({
-  type: "GET",
-  url: headerurl+"/noteheader",
-  data: {"noteid": noteid},
-  async: false,
-  cache: false,
-  success : function(json, status) {
-    var notename = json["0"]["title"];
-    $('#notename').html(notename);
-  }
-});
 
-var notedata_org ='';
-getOriginNotedata()
-
-$('input').each(function(index, obj) {
-  $(obj).css("cursor", "pointer");
-});
-
-$('input#save').click(function() {
-  var notedata = $('#edit').val();
+$("input#save").click(function() {
+  var notedata = $("#edit").val();
   var senddata = {"noteid": noteid, "notedata": notedata};
   $.ajax({
-    type: 'PUT',
-    url: headerurl+'/notedata',
+    type: "PUT",
+    url: headerurl+"/notedata",
     data: senddata,
     async: true,
     cache: false,
-    dataType : "json",
+    dataType : "json"
   }).done(function(jqXHR) {
     console.log(jqXHR);
   }).fail(function(jqXHR) {
     console.log(jqXHR);
   });
-  notedata_org = notedata;
-  console.log(notedata_org);
+  $(window).off("beforeunload");
 });
 
-var notSaveClose = function() {
-  var notedata = $('#edit').val();
-  if (notedata_org !== notedata) {
-    swal({
-      title: "ノートが更新されています",
-      text: "保存せずにノートを閉じますか？",
-      type: "warning",
-      showCancelButton: true,
-      closeOnConfirm: true 
-    },
-    function(inputValue){
-      if (inputValue == true) {
-        window.close();
-      }
-    });
-  } else {
-    window.close();
-  }
-};
 
-$('input#close').click(function() {
-  notSaveClose();
+$("input#close").click(function() {
+  window.close();
 });
 
-(function(){
-  console.log(document);
-})();
+
+getOriginNotedata();
+getNotename();
 
