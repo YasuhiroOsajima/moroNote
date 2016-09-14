@@ -57,6 +57,7 @@ body {
   background: #faffff;
   border-top: #fff 1px solid;
   border-right: #999 1px solid;
+  overflow: auto;
 }
 
 #foldertree{

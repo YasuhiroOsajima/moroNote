@@ -47,6 +47,7 @@ function getNotename() {
     cache: false,
     success : function(json, status) {
       var notename = json["0"]["title"];
+      $('title').text(notename);
       $('#notename').html(notename);
     }
   });
