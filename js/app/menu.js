@@ -4,7 +4,8 @@ var accountname = parameter.substring(1, parameter.length);
 $('div#account').html(accountname);
 
 selectedFolderColor_10 = "192, 255, 255";
-selectedFolderColor_16 = "#d0fafa";
+unselectedFolderColor_16 = "#d0fafa";
+selectedFolderColor_16 = "#c0ffff";
 
 
 //Bottun
@@ -38,7 +39,8 @@ $('#createnote').click(function() {
       return false;
     }
 
-    folderinfo = getSelectedFolderInfo();
+    var folderinfo = getSelectedFolderInfo();
+    console.log(folderinfo);
     if (folderinfo == false) {
       swal("ノートの作成に失敗しました");
       return false;
@@ -47,7 +49,9 @@ $('#createnote').click(function() {
     var folderid = folderinfo.folderid;
     var foldername = folderinfo.foldername;
 
-    if (!createNote(notename, folderid, foldername)) {
+    console.log("DEBUG");
+
+    if (createNote(notename, folderid, foldername)==false) {
       swal("ノートの作成に失敗しました");
       return false;
     }
@@ -161,6 +165,9 @@ function searchNotes(searchkey) {
 
 
 function createNote(notename, folderid, foldername) {
+  console.log(notename);
+  console.log(folderid);
+  console.log(foldername);
   $.ajax({
     type: "POST",
     url: headerurl+"/note",
@@ -168,8 +175,10 @@ function createNote(notename, folderid, foldername) {
     async: false,
     cache: false,
   }).done(function(json) {
+       console.log(json);
        return true;
   }).fail(function(json) {
+       console.log(json);
        return false;
   });
 };
@@ -180,10 +189,10 @@ function getSelectedFolderInfo() {
     if ("rgb("+selectedFolderColor_10 == $(obj).css("background").split(')')[0]) {
       var folderid = $(obj)[0]["id"];
       var foldername = $(obj)[0]["innerText"];
-      return {"folderid": folderid, "folderid": folderid}
+      console.log("DEBUG");
+      return {"folderid": folderid, "foldername": foldername}
     }
   });
-  return false;
 };
 
 

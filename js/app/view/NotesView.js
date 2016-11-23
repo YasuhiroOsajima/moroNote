@@ -146,8 +146,8 @@ function changeNoteTitle(noteid, notename) {
 
 
 com.apress.view.NotesView = Backbone.View.extend({
-  tagName: 'ul',
-  id: 'notelist',
+  tagName: "ul",
+  id: "notelist",
   render: function() {
     this.collection.each(function(note) {
       var noteView = new com.apress.view.NoteView({ model: note });

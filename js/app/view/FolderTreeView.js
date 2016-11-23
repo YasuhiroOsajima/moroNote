@@ -276,7 +276,6 @@ com.apress.view.FolderTreeView = Backbone.View.extend({
 
 
 function changeNoteFolder(noteid, newfolderid, newfoldername) {
-  console.log(newfoldername);
   $.ajax({
     type: "PUT",
     url: headerurl+"/noteheader",
@@ -318,9 +317,9 @@ function setFolderEvents() {
       drop: function(event, ui) {
         var noteid = ui.helper.context['id'];
         var droptagid = $(obj)['0']["id"];
-        var dropname = $(obj)['0']["innerText"];
-        console.log(dropname );
-        changeNoteFolder(noteid, droptagid, dropname);
+        //var dropname = $(obj)['0']["innerText"];
+        //changeNoteFolder(noteid, droptagid, dropname);
+        changeNoteFolder(noteid, droptagid);
         printFolderNotes(droptagid);
       }
     });
