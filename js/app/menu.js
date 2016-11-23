@@ -3,6 +3,9 @@ var parameter = location.search;
 var accountname = parameter.substring(1, parameter.length);
 $('div#account').html(accountname);
 
+unselectedNoteColor_16 = "#ebffff";
+selectedNoteColor_16 = "#c0ffff";
+
 selectedFolderColor_10 = "192, 255, 255";
 unselectedFolderColor_16 = "#d0fafa";
 selectedFolderColor_16 = "#c0ffff";
