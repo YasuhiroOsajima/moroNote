@@ -139,17 +139,17 @@ com.apress.view.FolderView = Backbone.View.extend({
       ]
     });
 
-    this.$el.css({
-      "cursor": "pointer",
-      "width": "90%",
-      "margin": "1px 0px",
-      "background": "#d0fafa",
-      "border-radius": "3px",
-      "border-top": "#fff 1px solid",
-      "border-left": "#fff 1px solid",
-      "border-bottom": "#999 1px solid",
-      "border-right": "#999 1px solid"
-    });
+    //this.$el.css({
+    //  "cursor": "pointer",
+    //  "width": "90%",
+    //  "margin": "1px 0px",
+    //  "background": "#d0fafa",
+    //  "border-radius": "3px",
+    //  "border-top": "#fff 1px solid",
+    //  "border-left": "#fff 1px solid",
+    //  "border-bottom": "#999 1px solid",
+    //  "border-right": "#999 1px solid"
+    //});
 
     return this;
   }
@@ -303,6 +303,17 @@ function printFolderTree() {
 
 function setFolderEvents() {
   $(".closed").each(function(index, obj) {
+    $(obj).css({"cursor": "pointer",
+                "width": "90%",
+                "margin": "1px 0px",
+                "background": "#d0fafa",
+                "border-radius": "3px",
+                "border-top": "#fff 1px solid",
+                "border-left": "#fff 1px solid",
+                "border-bottom": "#999 1px solid",
+                "border-right": "#999 1px solid"});
+    //$("#follow > li").css({"width": "90%"});
+
     var hasul = $(obj).find("ul");
     if (hasul.is("ul")) { return true; }
 
@@ -323,7 +334,7 @@ function setFolderEvents() {
         printFolderNotes(droptagid);
       }
     });
-  }, this);
+  });
 }
 
 

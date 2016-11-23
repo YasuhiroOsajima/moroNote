@@ -3,11 +3,14 @@ var parameter = location.search;
 var accountname = parameter.substring(1, parameter.length);
 $('div#account').html(accountname);
 
+unselectedNoteColor_10 = "235, 255, 255";
 unselectedNoteColor_16 = "#ebffff";
+selectedNoteColor_10 = "192, 255, 255";
 selectedNoteColor_16 = "#c0ffff";
 
-selectedFolderColor_10 = "192, 255, 255";
+unselectedFolderColor_10 = "208, 250, 250";
 unselectedFolderColor_16 = "#d0fafa";
+selectedFolderColor_10 = "192, 255, 255";
 selectedFolderColor_16 = "#c0ffff";
 
 
@@ -189,11 +192,14 @@ function createNote(notename, folderid, foldername) {
 
 function getSelectedFolderInfo() {
   $(".closed").each(function(index, obj) {
-    if ("rgb("+selectedFolderColor_10 == $(obj).css("background").split(')')[0]) {
+    if ("rgb(192, 255, 255" == $(obj).css("background").split(')')[0]) {
+      console.log($(obj).css("background").split(')')[0]);
+    //if ("rgb("+selectedFolderColor_10 == $(obj).css("background").split(')')[0]) {
       var folderid = $(obj)[0]["id"];
       var foldername = $(obj)[0]["innerText"];
-      console.log("DEBUG");
-      return {"folderid": folderid, "foldername": foldername}
+      //console.log(folderid);
+      //console.log(foldername);
+      return {"folderid": folderid, "foldername": foldername};
     }
   });
 };
