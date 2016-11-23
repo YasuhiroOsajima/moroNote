@@ -191,17 +191,16 @@ function createNote(notename, folderid, foldername) {
 
 
 function getSelectedFolderInfo() {
+  var folderid = '';
+  var foldername = '';
   $(".closed").each(function(index, obj) {
-    if ("rgb(192, 255, 255" == $(obj).css("background").split(')')[0]) {
+    if ("rgb("+selectedFolderColor_10 == $(obj).css("background").split(')')[0]) {
       console.log($(obj).css("background").split(')')[0]);
-    //if ("rgb("+selectedFolderColor_10 == $(obj).css("background").split(')')[0]) {
-      var folderid = $(obj)[0]["id"];
-      var foldername = $(obj)[0]["innerText"];
-      //console.log(folderid);
-      //console.log(foldername);
-      return {"folderid": folderid, "foldername": foldername};
+      folderid = $(obj)[0]["id"];
+      foldername = $(obj)[0]["innerText"];
     }
   });
+  return {"folderid": folderid, "foldername": foldername};
 };
 
 

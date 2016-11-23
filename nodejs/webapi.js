@@ -53,9 +53,10 @@ exports.note_post = function (req, res){
   var noteid = new mongoose.Types.ObjectId();
   var notename = req.body.title;
   var folder = req.body.folderid;
+  var foldername = req.body.foldername;
 
   mongo.createNoteData(noteid, notename, folder);
-  mongo.createNoteHeader(noteid, notename, folder);
+  mongo.createNoteHeader(noteid, notename, folder, foldername);
   res.send(200);
 };
 

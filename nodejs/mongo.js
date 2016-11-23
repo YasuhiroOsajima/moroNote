@@ -99,7 +99,8 @@ var noteHeaderSchema = new mongoose.Schema({
   noteid: String,
   title: String,
   updated_at: String,
-  folderid: String
+  folderid: String,
+  foldername: String
 });
 var NoteHeader = mongoose.model('noteheader', noteHeaderSchema);
 
@@ -169,7 +170,7 @@ exports.getNoteList_byFolderid = function(req, res) {
   });
 };
 
-exports.createNoteHeader = function(note_id, notename, folder) {
+exports.createNoteHeader = function(note_id, notename, folder, foldern) {
   var now = new Date();
   var yyyymmddhhmmss = now.getFullYear()+'/'+
                        ('0'+(now.getMonth()+1) ).slice(-2)+'/'+
@@ -183,7 +184,8 @@ exports.createNoteHeader = function(note_id, notename, folder) {
     noteid: note_id,
     title: notename,
     updated_at: yyyymmddhhmmss,
-    folderid: folder
+    folderid: folder,
+    foldername: foldern
   });
 
   new_noteheader.save(function(err) {
@@ -205,16 +207,25 @@ exports.updateNoteHeader = function(req, res) {
     folder = ''
   } else {folder = req.body.folderid;}
 
+  var foldern = ''
+  if (typeof req.body.foldername === "undefined") {
+    foldern = ''
+  } else {foldern = req.body.foldername;}
+
   var updatedata = {};
 
-  if (notename && !folder) {
-    updatedata["title"] = notename;
-  } else if(folder && !notename) {
-    updatedata["folderid"] = folder;
-  } else if(notename && folder) {
-    updatedata["title"] = notename;
-    updatedata["folderid"] = folder;
-  }
+  //if (notename && !folder) {
+  //  updatedata["title"] = notename;
+  //} else if(folder && !notename) {
+  //  updatedata["folderid"] = folder;
+  //} else if(notename && folder) {
+  //  updatedata["title"] = notename;
+  //  updatedata["folderid"] = folder;
+  //}
+
+  if (notename) updatedata["title"] = notename;
+  if (folder) updatedata["folderid"] = folder;
+  if (foldern) updatedata["foldername"] = foldern;
 
   var now = new Date();
   var yyyymmddhhmmss = now.getFullYear()+'/'+

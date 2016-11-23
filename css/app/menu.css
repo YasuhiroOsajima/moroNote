@@ -182,6 +182,11 @@ body {
   padding-right: 8px;
 }
 
+#main_notes li .foldername {
+  float: right;
+  padding-right: 8px;
+}
+
 #main_notes li .noteheader {
   padding-left: 7px;
   padding-bottom: 2px;

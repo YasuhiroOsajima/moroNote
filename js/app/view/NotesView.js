@@ -41,32 +41,6 @@ com.apress.view.NoteView = Backbone.View.extend({
     });
   },
 
-  deleteNote: function() {
-    if (deleteNoteFromDB(this.el.id) === false){ return false; }
-    printFolderNotes(this.folderid);
-  },
-
-  changeNoteName: function() {
-    swal({
-      title: "ノート名変更",
-      text: "ノート名を入力してください",
-      type: "input",
-      showCancelButton: true,
-      closeOnConfirm: false,
-      animation: "slide-from-top",
-      inputPlaceholder: "Note name"
-    },
-    function(notename){
-      if (notename === false || notename === "") {
-        swal.showInputError("無効なノート名です");
-        return false;
-      }
-      if (changeNoteTitle(this.noteid, notename) === false){ return false; }
-      this.notename = notename;
-      printFolderNotes(this.folderid);
-    });
-  },
-
   printPreview: function() {
     $.ajax({
       type: "GET",
@@ -85,20 +59,19 @@ com.apress.view.NoteView = Backbone.View.extend({
   render: function() {
     this.folderid = this.model.toJSON().folderid;
     this.noteid = this.model.toJSON().noteid;
-    this.notename = this.model.toJSON().title;
 
     this.el.id = this.model.toJSON().noteid;
     var template = this.template( this.model.toJSON() );
     this.$el.html(template);
 
-    this.$el.chromeContext({
-      items: [
-        { title: 'ノートを削除',
-          onclick: function(event) { this.deleteNote(); } },
-        { title: 'ノート名変更',
-          onclick: function(event) { this.changeNoteName(); } },
-      ]
-    });
+    //this.$el.chromeContext({
+    //  items: [
+    //    { title: 'ノートを削除',
+    //      onclick: function(event) { deleteNote(this.noteid, this.folderid); } },
+    //    { title: 'ノート名変更',
+    //      onclick: function(event) { changeNoteName(this.noteid, this.folderid); } },
+    //  ]
+    //});
 
     this.$el.css("cursor", "pointer");
 
@@ -112,6 +85,69 @@ com.apress.view.NoteView = Backbone.View.extend({
     return this;
   }
 });
+
+
+var resetNoteRightMenue = function() {
+  $('#notelist li').each(function(index, obj) {
+    $(obj).chromeContext({
+      items: [
+        { title: 'ノートを削除',
+          onclick: function(event) { deleteNote(obj); } },
+        { title: 'ノート名変更',
+          onclick: function(event) { changeNoteName(obj); } },
+      ]
+    });
+  });
+};
+
+
+function deleteNote(noteobj) {
+  var noteid = noteobj.id;
+  var folderid = '';
+  $.ajax({
+    type: "GET",
+    url: headerurl+"/noteheader",
+    data: {"noteid": noteid},
+    async: false,
+    cache: false,
+    success : function(json, status) {
+      console.log(status);
+      folderid = json[0]['folderid'];
+    }
+  });
+
+  if (deleteNoteFromDB(noteid) === false){ return false; }
+  printFolderNotes(folderid);
+};
+
+
+function changeNoteName(noteobj) {
+  var noteid = noteobj.id;
+
+  swal({
+    title: "ノート名変更",
+    text: "ノート名を入力してください",
+    type: "input",
+    showCancelButton: true,
+    closeOnConfirm: false,
+    animation: "slide-from-top",
+    inputPlaceholder: "Note name"
+  },
+  function(notename){
+    if (notename === false || notename === "") {
+      swal.showInputError("無効なノート名です");
+      return false;
+    }
+    if (changeNoteTitle(noteid, notename) === false){ return false; }
+    var folderid = '';
+    $('.closed').each(function(index, obj) {
+      if ("rgb(192, 255, 255" == $(obj).css("background").split(')')[0]) {
+        folderid = $(obj)[0]["id"];
+      }
+    });
+    printFolderNotes(folderid);
+  });
+};
 
 
 function deleteNoteFromDB(noteid) {
@@ -180,7 +216,6 @@ function getNotesFromDB(sort_key, sort_type) {
        for (i=0; i<json.length; i++) {
          allNoteList.push(json[i]);
        }
-       return allNoteList;
   }).fail(function(json) {
        return false;
   });
@@ -190,8 +225,8 @@ function getNotesFromDB(sort_key, sort_type) {
 
 
 function printFolderNotes(folderid, NoteList) {
-  $('.closed').each(function(index, obj) {
-    $(obj).css("background", selectedFolderColor_16);
+  $(".closed").each(function(index, obj) {
+    $(obj).css("background", unselectedFolderColor_16);
   });
 
   var allNoteList = NoteList || getNotesFromDB();
@@ -206,6 +241,8 @@ function printFolderNotes(folderid, NoteList) {
   var notesView = new com.apress.view.NotesView({collection: noteList});
   $('#main_notes').html(notesView.render().el);
   $('#'+folderid).css("background", selectedFolderColor_16);
+
+  resetNoteRightMenue();
 };
 
 
