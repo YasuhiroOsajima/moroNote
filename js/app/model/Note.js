@@ -7,6 +7,7 @@ com.apress.model.Note = Backbone.Model.extend({
     noteid: '',
     title: '',
     folderid: '',
+    foldername: '',
     updated_at: ''
   }
 });

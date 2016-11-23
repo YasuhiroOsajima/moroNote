@@ -25,7 +25,8 @@ function checkAndLogin() {
       });
     }
   });
-}
+};
+
 
 $(function($) {
   $('#namearea').keypress(function(e) {
@@ -35,6 +36,7 @@ $(function($) {
   });
 });
 
+
 $(function($) {
   $('#passwordarea').keypress(function(e) {
     if (e.which == 13) {
@@ -43,9 +45,11 @@ $(function($) {
   });
 });
 
+
 $('#login').click(function() {
   checkAndLogin();
 });
+
 
 $('#manage').click(function() {
   var username = $('#namearea').val();

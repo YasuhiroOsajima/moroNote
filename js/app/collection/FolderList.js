@@ -4,5 +4,5 @@ com.apress.collection = com.apress.collection || {};
 
 com.apress.collection.FolderList = Backbone.Collection.extend({
   model: com.apress.model.Folder,
-  comparator: 'sortname'
+  comparator: "sortname"
 });
