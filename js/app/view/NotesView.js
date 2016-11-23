@@ -8,26 +8,22 @@ com.apress.view.NoteView = Backbone.View.extend({
   className: "note",
   template: _.template( $("#note-view").html() ),
   
-  folderid: this.model.toJSON().folderid,
-  noteid: this.model.toJSON().noteid,
-  notename: this.model.toJSON().title,
-
   events: {
     "click": "setSelectedColor",
     "dblclick": "openEditor",
   },
 
   setSelectedColor: function(event) {
-    clearNoteColor();
+    this.clearNoteColor();
     this.$el.css("background", "#c0ffff");
     this.printPreview();
-  };
+  },
 
   clearNoteColor: function() {
     $('#notelist li').each(function(index, obj) {
-      this.$el.css("background", "");
+      $(obj).css("background", "");
     });
-  };
+  },
 
   openEditor: function(event) {
     var childWindow = window.open('about:blank');
@@ -43,7 +39,7 @@ com.apress.view.NoteView = Backbone.View.extend({
       childWindow.close();
       childWindow = null;
     });
-  };
+  },
 
   deleteNote: function() {
     if (deleteNoteFromDB(this.el.id) === false){ return false; }
@@ -84,9 +80,13 @@ com.apress.view.NoteView = Backbone.View.extend({
     }).fail(function() {
          return false;
     });
-  };
+  },
 
   render: function() {
+    this.folderid = this.model.toJSON().folderid;
+    this.noteid = this.model.toJSON().noteid;
+    this.notename = this.model.toJSON().title;
+
     this.el.id = this.model.toJSON().noteid;
     var template = this.template( this.model.toJSON() );
     this.$el.html(template);
@@ -156,6 +156,37 @@ com.apress.view.NotesView = Backbone.View.extend({
     return this;
   }
 });
+
+
+function getNotesFromDB(sort_key, sort_type) {
+  var sort_key = sort_key || false;
+  var sort_type = sort_type || false;
+  var allNoteList = [];
+
+  var params = {
+    url: headerurl+"/allnoteheaders",
+    type: "GET",
+    async: false,
+    cache: false,
+  };
+
+  if (sort_key && sort_type) {
+    params.data = {"key": sortkey, "type": type};
+  }
+
+  $.ajax(
+    params
+  ).done(function(json) {
+       for (i=0; i<json.length; i++) {
+         allNoteList.push(json[i]);
+       }
+       return allNoteList;
+  }).fail(function(json) {
+       return false;
+  });
+
+  return allNoteList;
+};
 
 
 function printFolderNotes(folderid, NoteList) {

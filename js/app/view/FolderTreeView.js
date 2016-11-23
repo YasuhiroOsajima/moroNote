@@ -8,8 +8,6 @@ com.apress.view.FolderView = Backbone.View.extend({
   className: 'closed',
   template: _.template( $("#folder-view").html() ),
 
-  folderid: this.model.toJSON().folderid;
-
   createChildFolder: function() {
     swal({
       title: "フォルダ作成",
@@ -35,7 +33,7 @@ com.apress.view.FolderView = Backbone.View.extend({
         }
       }
 
-      var pfolderid = if (this.folderid=='0' || this.folderid=='1') ? '' : this.folderid;
+      var pfolderid = (this.folderid=='0' || this.folderid=='1') ? '' : this.folderid;
       $.ajax({
         type: "POST",
         url: headerurl+"/folder",
@@ -49,7 +47,7 @@ com.apress.view.FolderView = Backbone.View.extend({
          return false;
       });
     });
-  }
+  },
   
   deleteFolder: function() {
     if (this.folderid==0 || this.folderid==1) {
@@ -70,7 +68,7 @@ com.apress.view.FolderView = Backbone.View.extend({
     }
 
     deleteFolderFromDB(this.folderid);
-  }
+  },
   
   changeFolderName: function() {
     swal({
@@ -102,7 +100,7 @@ com.apress.view.FolderView = Backbone.View.extend({
            return false;
       });
     });
-  }
+  },
 
   changeNoteFoldername: function(foldername) {
     var notesList = getFolderNotes(this.folderid);
@@ -121,9 +119,11 @@ com.apress.view.FolderView = Backbone.View.extend({
         cache: false,
       });
     }
-  }
+  },
 
   render: function() {
+    this.folderid = this.model.toJSON().folderid;
+
     this.el.id = this.model.toJSON().folderid;
     var template = this.template( this.model.toJSON() );
     this.$el.html(template);
@@ -172,6 +172,8 @@ function getFoldersFromDB() {
        swal("DBへの接続に失敗しました");
        return false;
   });
+
+  return allFolderList;
 };
 
 
@@ -219,14 +221,6 @@ com.apress.view.FolderTreeView = Backbone.View.extend({
   topfolders: [],
   untopfolders: [],
 
-  printFolderTree: function() {
-    $("#side_tree ul").treeview({
-      collapsed: true,
-      unique: false,
-      animated: "fast"
-    });
-  };
-
   render: function() {
     this.collection.each(function(folder) {
       if (folder.toJSON().parentfolderid == '') {
@@ -246,13 +240,15 @@ com.apress.view.FolderTreeView = Backbone.View.extend({
 
     do {
       this.collection.each(function(folder) {
+        var parentfolderid = folder.toJSON().parentfolderid;
+
         if (this.untopfolders.indexOf(folder) < 0) {
-          continue;
+          return true;
         }
 
         var parentfolder = this.$el.find('#'+parentfolderid);
         if (!parentfolder.is('#'+parentfolderid)) {
-          continue;
+          return true;
         }
 
         var hasul = parentfolder.find("ul");
@@ -274,50 +270,13 @@ com.apress.view.FolderTreeView = Backbone.View.extend({
 
     $("#follow > li").css({"width": "90%"});
 
-    $(".closed").each(function(index, obj) {
-      var hasul = $(obj).find("ul");
-      if (hasul.is("ul")) { continue; }
-
-      // most under folder
-      $(obj).click(function() {
-        $("#searcher").val("");
-        var clickedfolderid = $(obj)['0']["id"];
-        printFolderNotes(clickedfolderid);
-      });
-
-      $(obj).droppable({
-        drop: function(event, ui) {
-          var noteid = ui.helper.context['id'];
-          var droptagid = $(obj)['0']["id"];
-          var dropname = $(obj)['0']["innerText"];
-          changeNoteFolder(noteid, droptagid, dropname);
-          printFolderNotes(newfolderid);
-        }
-      });
-    });
-
-    this.printFolderTree();
     return this;
   }
 });
 
 
-function printFolders() {
-  var folderList = new com.apress.collection.FolderList([
-    { folderid: 0, name: 'ALL', sortname: '-1', parentfolderid: ''},
-  ]);
-
-  var allFolderList = getFoldersFromDB;
-  for (i=0; i<allFolderList.length; i++) {
-    folderList.add(allFolderList[i]);
-  }
-
-  var folderView = new com.apress.view.FolderTreeView({collection: folderList});
-  $('#side_tree').html(folderView.render().el);
-};
-
-
 function changeNoteFolder(noteid, newfolderid, newfoldername) {
+  console.log(newfoldername);
   $.ajax({
     type: "PUT",
     url: headerurl+"/noteheader",
@@ -325,10 +284,64 @@ function changeNoteFolder(noteid, newfolderid, newfoldername) {
     async: false,
     cache: false,
   }).done(function(json) {
+       console.log(json);
        return true;
   }).fail(function() {
+       console.log("DEBUG");
        return false;
   });
+};
+
+
+function printFolderTree() {
+  $("#side_tree ul").treeview({
+    collapsed: true,
+    unique: false,
+    animated: "fast"
+  });
+};
+
+
+function setFolderEvents() {
+  $(".closed").each(function(index, obj) {
+    var hasul = $(obj).find("ul");
+    if (hasul.is("ul")) { return true; }
+
+    // most under folder
+    $(obj).click(function() {
+      $("#searcher").val("");
+      var clickedfolderid = $(obj)['0']["id"];
+      printFolderNotes(clickedfolderid);
+    });
+
+    $(obj).droppable({
+      drop: function(event, ui) {
+        var noteid = ui.helper.context['id'];
+        var droptagid = $(obj)['0']["id"];
+        var dropname = $(obj)['0']["innerText"];
+        console.log(dropname );
+        changeNoteFolder(noteid, droptagid, dropname);
+        printFolderNotes(droptagid);
+      }
+    });
+  }, this);
+}
+
+
+function printFolders() {
+  var folderList = new com.apress.collection.FolderList([
+    { folderid: 0, name: 'ALL', sortname: '-1', parentfolderid: ''},
+  ]);
+
+  var allFolderList = getFoldersFromDB();
+  for (i=0; i<allFolderList.length; i++) {
+    folderList.add(allFolderList[i]);
+  }
+
+  var folderView = new com.apress.view.FolderTreeView({collection: folderList});
+  $('#side_tree').html(folderView.render().el);
+  printFolderTree();
+  setFolderEvents();
 };
 
 

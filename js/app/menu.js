@@ -187,38 +187,10 @@ function getSelectedFolderInfo() {
 };
 
 
-function getNotesFromDB(args) {
-  var sort_key = args.sort_key || false;
-  var sort_type = args.sort_type || false;
-  var allNoteList = [];
-
-  var params = {
-    url: headerurl+"/allnoteheaders",
-    type: "GET",
-    async: false,
-    cache: false,
-  };
-
-  if (sort_key && sort_type) {
-    params.data = {"key": sortkey, "type": type};
-  }
-
-  $.ajax({
-      params
-  }).done(function(json) {
-       for (i=0; i<json.length; i++) {
-         allNoteList.push(json[i]);
-       }
-       return allNoteList;
-  }).fail(function(json) {
-       return false;
-  });
-};
-
-
 (function(){
   console.log(document.origin);
 })();
+
 
 printFolders();
 printAllNotes();
