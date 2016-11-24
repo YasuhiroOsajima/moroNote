@@ -1,5 +1,5 @@
-//var headerurl = document.baseURI.slice(6).split('/login')[0];
-var headerurl = document.origin.slice(6);
+var headerurl = document.baseURI.slice(6).split('/login')[0];
+//var headerurl = document.origin.slice(6);
 
 function checkAndLogin() {
   var username = $('#namearea').val();

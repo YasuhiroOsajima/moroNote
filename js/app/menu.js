@@ -1,4 +1,5 @@
-var headerurl = document.origin.slice(6);
+var headerurl = document.baseURI.slice(6).split('/notelist')[0];
+//var headerurl = document.origin.slice(6);
 var parameter = location.search;
 var accountname = parameter.substring(1, parameter.length);
 $('div#account').html(accountname);
