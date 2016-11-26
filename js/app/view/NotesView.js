@@ -102,21 +102,40 @@ var resetNoteRightMenue = function() {
 
 
 function deleteNote(noteobj) {
-  var noteid = noteobj.id;
-  var folderid = '';
-  $.ajax({
-    type: "GET",
-    url: headerurl+"/noteheader",
-    data: {"noteid": noteid},
-    async: false,
-    cache: false,
-    success : function(json, status) {
-      folderid = json[0]['folderid'];
+  swal({
+    title: "本当に削除しますか？",
+    text: "この処理はやり直しができません",
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#DD6B55",
+    confirmButtonText: "Yes",
+    cancelButtonText: "No",
+    closeOnConfirm: false,
+    closeOnCancel: false
+  },
+  function(isConfirm){
+    if (isConfirm) {
+
+      var noteid = noteobj.id;
+      var folderid = '';
+      $.ajax({
+        type: "GET",
+        url: headerurl+"/noteheader",
+        data: {"noteid": noteid},
+        async: false,
+        cache: false,
+        success : function(json, status) {
+          folderid = json[0]['folderid'];
+        }
+      });
+
+      if (deleteNoteFromDB(noteid) === false){ return false; }
+      printFolderNotes(folderid);
+
+    } else {
+      swal("キャンセルされました", "削除にはご注意ください");
     }
   });
-
-  if (deleteNoteFromDB(noteid) === false){ return false; }
-  printFolderNotes(folderid);
 };
 
 
@@ -140,7 +159,7 @@ function changeNoteName(noteobj) {
     if (changeNoteTitle(noteid, notename) === false){ return false; }
     var folderid = '';
     $('.closed').each(function(index, obj) {
-      if ("rgb(192, 255, 255" == $(obj).css("background").split(')')[0]) {
+      if ("rgb("+selectedFolderColor_10 == $(obj).css("background").split(')')[0]) {
         folderid = $(obj)[0]["id"];
       }
     });

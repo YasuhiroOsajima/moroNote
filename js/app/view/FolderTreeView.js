@@ -141,7 +141,24 @@ function deleteFolder(folderobj) {
     return false;
   }
 
-  deleteFolderFromDB(folderid);
+  swal({
+    title: "本当に削除しますか？",
+    text: "この処理はやり直しができません",
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#DD6B55",
+    confirmButtonText: "Yes",
+    cancelButtonText: "No",
+    closeOnConfirm: false,
+    closeOnCancel: false
+  },
+  function(isConfirm){
+    if (isConfirm) {
+      deleteFolderFromDB(folderid);
+    } else {
+      swal("キャンセルされました", "削除にはご注意ください");
+    }
+  });
 };
 
 
@@ -310,6 +327,7 @@ com.apress.view.FolderTreeView = Backbone.View.extend({
       }, this);
     } while (this.untopfolders.length > 0);
 
+    this.$el.append('<li></li>')
     return this;
   }
 });
