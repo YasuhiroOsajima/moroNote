@@ -9,8 +9,6 @@ com.apress.view.FolderView = Backbone.View.extend({
   template: _.template( $("#folder-view").html() ),
 
   render: function() {
-    this.folderid = this.model.toJSON().folderid;
-
     this.el.id = this.model.toJSON().folderid;
     var template = this.template( this.model.toJSON() );
     this.$el.html(template);
@@ -130,7 +128,7 @@ function deleteFolder(folderobj) {
   }
 
   var hasul = $("#"+folderid).find('ul');
-  if (!hasul.is('ul')) {
+  if (hasul.is('ul')) {
     swal("フォルダ内に他のフォルダが存在します");
     return false;
   }
@@ -155,6 +153,7 @@ function deleteFolder(folderobj) {
   function(isConfirm){
     if (isConfirm) {
       deleteFolderFromDB(folderid);
+      printFolders();
     } else {
       swal("キャンセルされました", "削除にはご注意ください");
     }
@@ -260,7 +259,7 @@ function deleteFolderFromDB(folderid) {
   $.ajax({
     type: "DELETE",
     url: headerurl+"/folder",
-    data: {"folderid": this.folderid},
+    data: {"folderid": folderid},
     async: false,
     cache: false,
   }).done(function(json) {
