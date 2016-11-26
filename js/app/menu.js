@@ -47,7 +47,6 @@ $('#createnote').click(function() {
     }
 
     var folderinfo = getSelectedFolderInfo();
-    console.log(folderinfo);
     if (folderinfo == false) {
       swal("ノートの作成に失敗しました");
       return false;
@@ -55,8 +54,6 @@ $('#createnote').click(function() {
 
     var folderid = folderinfo.folderid;
     var foldername = folderinfo.foldername;
-
-    console.log("DEBUG");
 
     if (createNote(notename, folderid, foldername)==false) {
       swal("ノートの作成に失敗しました");
@@ -172,9 +169,6 @@ function searchNotes(searchkey) {
 
 
 function createNote(notename, folderid, foldername) {
-  console.log(notename);
-  console.log(folderid);
-  console.log(foldername);
   $.ajax({
     type: "POST",
     url: headerurl+"/note",
@@ -182,10 +176,8 @@ function createNote(notename, folderid, foldername) {
     async: false,
     cache: false,
   }).done(function(json) {
-       console.log(json);
        return true;
   }).fail(function(json) {
-       console.log(json);
        return false;
   });
 };
@@ -196,7 +188,6 @@ function getSelectedFolderInfo() {
   var foldername = '';
   $(".closed").each(function(index, obj) {
     if ("rgb("+selectedFolderColor_10 == $(obj).css("background").split(')')[0]) {
-      console.log($(obj).css("background").split(')')[0]);
       folderid = $(obj)[0]["id"];
       foldername = $(obj)[0]["innerText"];
     }

@@ -111,7 +111,6 @@ function deleteNote(noteobj) {
     async: false,
     cache: false,
     success : function(json, status) {
-      console.log(status);
       folderid = json[0]['folderid'];
     }
   });

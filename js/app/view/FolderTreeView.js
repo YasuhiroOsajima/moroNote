@@ -180,7 +180,6 @@ function changeFolderName(folderobj) {
 
 
 function changeNoteFoldername(folderid, foldername) {
-  console.log(foldername);
   var notesList = getFolderNotes(folderid);
   if (notesList.length == 0) {
     return true;
@@ -297,6 +296,7 @@ com.apress.view.FolderTreeView = Backbone.View.extend({
         var hasul = parentfolder.find("ul");
         if (!hasul.is("ul")) {
           parentfolder.append('<ul id="follow"></ul>');
+          hasul = parentfolder.find("ul");
         }
 
         var folderView = new com.apress.view.FolderView({ model: folder });
@@ -323,10 +323,8 @@ function changeNoteFolder(noteid, newfolderid, newfoldername) {
     async: false,
     cache: false,
   }).done(function(json) {
-       console.log(json);
        return true;
   }).fail(function() {
-       console.log("DEBUG");
        return false;
   });
 };
@@ -379,9 +377,9 @@ function printFolders() {
   var folderView = new com.apress.view.FolderTreeView({collection: folderList});
   $('#side_tree').html(folderView.render().el);
 
-  printFolderTree();
   setFolderEvents();
   resetFolderRightMenue();
+  printFolderTree();
 };
 
 

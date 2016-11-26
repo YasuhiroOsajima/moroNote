@@ -12,7 +12,6 @@ function checkAndLogin() {
     async: false,
     cache: false,
     success : function(json, status) {
-      console.log(status);
       window.location.href = '/notelist?'+username;
     },
     error : function(json, status) {
@@ -62,7 +61,6 @@ $('#manage').click(function() {
     async: false,
     cache: false,
     success : function(json, status) {
-      console.log(status);
       window.location.href = '/manage';
     },
     error : function(json, status) {
