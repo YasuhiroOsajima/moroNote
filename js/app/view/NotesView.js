@@ -178,7 +178,10 @@ function deleteNoteFromDB(noteid) {
     async: false,
     cache: false,
   }).done(function(json) {
-       swal("ノートが削除されました");
+       swal({
+         title: "ノートが削除されました",
+         animation: "slide-from-top"
+       });
        return true;
   }).fail(function() {
        return false;

@@ -264,7 +264,10 @@ function deleteFolderFromDB(folderid) {
     async: false,
     cache: false,
   }).done(function(json) {
-       swal("フォルダが削除されました ");
+       swal({
+         title: "フォルダが削除されました",
+         animation: "slide-from-top"
+       });
        return true;
   }).fail(function(json) {
        swal("DBへの接続に失敗しました");
