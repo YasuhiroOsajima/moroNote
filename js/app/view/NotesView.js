@@ -102,8 +102,11 @@ var resetNoteRightMenue = function() {
 
 
 function deleteNote(noteobj) {
+  var noteid = noteobj.id;
+  var notename = $("#"+noteid).find('a')[0].text;
+
   swal({
-    title: "本当に削除しますか？",
+    title: "本当に '"+notename+"' を削除しますか？",
     text: "この処理はやり直しができません",
     type: "warning",
     showCancelButton: true,
@@ -116,7 +119,6 @@ function deleteNote(noteobj) {
   function(isConfirm){
     if (isConfirm) {
 
-      var noteid = noteobj.id;
       var folderid = '';
       $.ajax({
         type: "GET",

@@ -139,8 +139,9 @@ function deleteFolder(folderobj) {
     return false;
   }
 
+  var foldername = $("#"+folderid)[0].innerText;
   swal({
-    title: "本当に削除しますか？",
+    title: "本当に '"+foldername+"' を削除しますか？",
     text: "この処理はやり直しができません",
     type: "warning",
     showCancelButton: true,
