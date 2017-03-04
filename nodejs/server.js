@@ -51,7 +51,11 @@ var loginCheck = function(req, res, next) {
   console.log(req.url);
 
   if(req.session.user){
-    next();
+    if(req.url == '/'){
+      res.redirect('/login');
+    }else{
+      next();
+    }
   }else{
     //first access.
     res.redirect('/login');
